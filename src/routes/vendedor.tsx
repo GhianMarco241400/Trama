@@ -18,9 +18,13 @@ export const Route = createFileRoute("/vendedor")({
   component: Vendedor,
 });
 
-const categorias: { n: string; i: LucideIcon; k: number }[] = [
-  { n: "Polos", i: Shirt, k: 48 }, { n: "Camisas", i: Briefcase, k: 32 }, { n: "Pantalones", i: Layers, k: 27 },
-  { n: "Casacas", i: Shirt, k: 19 }, { n: "Zapatillas", i: Footprints, k: 54 }, { n: "Accesorios", i: Watch, k: 23 },
+const categorias: { n: string; i: LucideIcon; k: number; f: string }[] = [
+  { n: "Polos", i: Shirt, k: 48, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg/250px-Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg" },
+  { n: "Camisas", i: Briefcase, k: 32, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg/250px-Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg" },
+  { n: "Pantalones", i: Layers, k: 27, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Chino_pants.jpg/250px-Chino_pants.jpg" },
+  { n: "Casacas", i: Shirt, k: 19, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Jean_jacket.jpg/250px-Jean_jacket.jpg" },
+  { n: "Zapatillas", i: Footprints, k: 54, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/A_Vans_Sneaker_On_The_Side.jpg/250px-A_Vans_Sneaker_On_The_Side.jpg" },
+  { n: "Accesorios", i: Watch, k: 23, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Fossil_wristwatch_with_white_background.jpg/250px-Fossil_wristwatch_with_white_background.jpg" },
 ];
 
 const colores = ["#1d1d1d", "#2f5d50", "#c9b99a", "#8a3b2c", "#4b6b8a", "#bfc7c9"];
@@ -77,8 +81,11 @@ function Vendedor() {
                 <div className={`absolute -right-6 -top-6 h-20 w-20 rounded-full transition-transform duration-300 group-hover:scale-125 ${on ? "bg-ink/15" : "bg-sky/10"}`} />
                 <div className={`absolute -bottom-3 right-6 h-8 w-8 rounded-full border-4 ${on ? "border-ink/20" : "border-sky/10"}`} />
                 <div className="relative flex items-center gap-3">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${on ? "bg-ink text-brand" : "bg-sky text-ink"}`}>
-                    <c.i className="h-6 w-6" strokeWidth={1.6} />
+                  <div className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-xl ${on ? "ring-2 ring-ink/30" : ""}`}>
+                    <img src={c.f} alt={c.n} loading="lazy" className="h-full w-full object-cover" />
+                    <span className={`absolute bottom-0.5 right-0.5 flex h-5 w-5 items-center justify-center rounded-md ${on ? "bg-ink text-brand" : "bg-ink/80 text-primary-foreground"}`}>
+                      <c.i className="h-3 w-3" strokeWidth={1.8} />
+                    </span>
                   </div>
                   <div>
                     <p className={`text-sm font-semibold ${on ? "text-ink" : "text-primary-foreground"}`}>{c.n}</p>
