@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,10 +35,7 @@ function Login() {
 
       <div className="flex items-center justify-center p-6">
         <div className="w-full max-w-sm animate-rise">
-          <div className="mb-10 flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-lg font-extrabold text-primary-foreground">T</div>
-            <span className="text-2xl font-extrabold tracking-tight text-foreground">Trama</span>
-          </div>
+          <div className="mb-10"><Logo /></div>
           <h1 className="text-3xl font-bold text-foreground">Bienvenido de nuevo</h1>
           <p className="mt-2 text-sm text-muted-foreground">Ingresa tus datos para abrir la caja.</p>
           <div className="mt-8 space-y-4">
