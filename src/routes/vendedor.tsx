@@ -4,6 +4,7 @@ import {
   LayoutGrid, List, SlidersHorizontal, Plus, Minus, Trash2, Briefcase, Layers,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/vendedor")({
   head: () => ({
@@ -17,9 +18,9 @@ export const Route = createFileRoute("/vendedor")({
   component: Vendedor,
 });
 
-const categorias: { n: string; i: LucideIcon }[] = [
-  { n: "Polos", i: Shirt }, { n: "Camisas", i: Briefcase }, { n: "Pantalones", i: Layers },
-  { n: "Casacas", i: Shirt }, { n: "Zapatillas", i: Footprints }, { n: "Accesorios", i: Watch },
+const categorias: { n: string; i: LucideIcon; k: number }[] = [
+  { n: "Polos", i: Shirt, k: 48 }, { n: "Camisas", i: Briefcase, k: 32 }, { n: "Pantalones", i: Layers, k: 27 },
+  { n: "Casacas", i: Shirt, k: 19 }, { n: "Zapatillas", i: Footprints, k: 54 }, { n: "Accesorios", i: Watch, k: 23 },
 ];
 
 const colores = ["#1d1d1d", "#2f5d50", "#c9b99a", "#8a3b2c", "#4b6b8a", "#bfc7c9"];
@@ -61,27 +62,46 @@ function Vendedor() {
   const subtotal = 249.9 + 119.9 * 2;
   const igv = subtotal * 0.18;
   return (
-    <div className="flex min-h-screen bg-background font-sans text-foreground">
-      <aside className="hidden w-48 shrink-0 bg-ink p-4 md:block">
-        <div className="mb-8 flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand font-extrabold text-primary-foreground">T</div>
-          <span className="text-xl font-extrabold text-primary-foreground">Trama</span>
+    <div className="flex h-screen overflow-hidden bg-background font-sans text-foreground">
+      <aside className="hidden w-56 shrink-0 flex-col bg-ink md:flex">
+        <div className="px-5 pb-5 pt-5"><Logo dark /></div>
+        <div className="flex items-baseline justify-between px-5 pb-3">
+          <h2 className="text-lg font-bold text-primary-foreground">Categorías</h2>
+          <span className="text-[10px] text-sky/50">6 líneas</span>
         </div>
-        <h2 className="mb-3 text-lg font-bold text-primary-foreground">Categorías</h2>
-        <div className="space-y-3">
-          {categorias.map((c, i) => (
-            <button key={c.n} className={`group w-full rounded-2xl border-4 p-1.5 transition-colors ${i === 0 ? "border-sky bg-sky" : "border-foreground/80 bg-foreground/90 hover:border-brand"}`}>
-              <div className="flex h-20 items-center justify-center rounded-xl bg-ink">
-                <c.i className="h-10 w-10 text-sky" strokeWidth={1.4} />
-              </div>
-              <p className={`py-1.5 text-xs font-medium ${i === 0 ? "text-ink" : "text-primary-foreground"}`}>{c.n}</p>
-            </button>
-          ))}
+        <div className="flex-1 space-y-2.5 overflow-y-auto px-4 pb-5 [scrollbar-width:none]">
+          {categorias.map((c, i) => {
+            const on = i === 0;
+            return (
+              <button key={c.n} className={`group relative w-full overflow-hidden rounded-2xl p-3 text-left transition-all duration-200 hover:-translate-y-0.5 ${on ? "bg-brand" : "bg-foreground/80 hover:bg-foreground"}`}>
+                <div className={`absolute -right-6 -top-6 h-20 w-20 rounded-full transition-transform duration-300 group-hover:scale-125 ${on ? "bg-ink/15" : "bg-sky/10"}`} />
+                <div className={`absolute -bottom-3 right-6 h-8 w-8 rounded-full border-4 ${on ? "border-ink/20" : "border-sky/10"}`} />
+                <div className="relative flex items-center gap-3">
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${on ? "bg-ink text-brand" : "bg-sky text-ink"}`}>
+                    <c.i className="h-6 w-6" strokeWidth={1.6} />
+                  </div>
+                  <div>
+                    <p className={`text-sm font-semibold ${on ? "text-ink" : "text-primary-foreground"}`}>{c.n}</p>
+                    <p className={`text-[10px] ${on ? "text-ink/70" : "text-sky/50"}`}>{c.k} productos</p>
+                  </div>
+                </div>
+                <div className="relative mt-3 flex gap-1">
+                  {[0, 1, 2, 3, 4, 5].map((d) => (
+                    <span key={d} className={`h-1 flex-1 rounded-full ${d < c.k / 10 ? (on ? "bg-ink" : "bg-brand") : on ? "bg-ink/20" : "bg-sky/15"}`} />
+                  ))}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <div className="m-4 mt-0 rounded-2xl border border-sky/15 p-3">
+          <p className="text-[10px] text-sky/50">Caja abierta</p>
+          <p className="text-sm font-semibold text-primary-foreground">Tienda Miraflores</p>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-3 border-b border-border bg-card px-4 py-2.5">
+        <header className="flex shrink-0 items-center gap-3 border-b border-border bg-card px-4 py-2.5">
           <div className="flex w-full max-w-xs items-center rounded-full border border-border px-4 py-2">
             <input placeholder="Buscar productos" className="w-full bg-transparent text-sm outline-none" />
             <Search className="h-4 w-4" />
@@ -101,9 +121,9 @@ function Vendedor() {
           </div>
         </header>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 xl:flex-row">
-          <main className="min-w-0 flex-1">
-            <div className="mb-4 flex items-center gap-2">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4 xl:flex-row xl:overflow-hidden">
+          <main className="min-w-0 flex-1 xl:overflow-y-auto xl:pr-1">
+            <div className="sticky top-0 z-20 -mx-1 mb-4 flex items-center gap-2 bg-background px-1 pb-2">
               {["Todos", "Tendencia", "Nuevos", "Más vendidos"].map((f, i) => (
                 <button key={f} className={`rounded-full border px-4 py-1.5 text-xs transition-colors ${i === 1 ? "border-brand bg-brand text-primary-foreground" : "border-border bg-card hover:border-ink"}`}>{f}</button>
               ))}
@@ -153,7 +173,7 @@ function Vendedor() {
             </div>
           </main>
 
-          <aside className="w-full shrink-0 self-start rounded-2xl bg-card p-4 xl:w-80">
+          <aside className="w-full shrink-0 rounded-2xl bg-card p-4 xl:w-80 xl:overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Detalle del pedido</h2>
               <span className="rounded-full border border-border px-2.5 py-1 text-[10px] font-medium">N° 004521</span>
