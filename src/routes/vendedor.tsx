@@ -119,7 +119,7 @@ function Vendedor() {
                 return (
                   <div key={p.n} className={`rounded-2xl bg-card p-2.5 transition-shadow hover:shadow-lg ${agotado ? "opacity-50" : ""}`}>
                     <div className="relative flex h-40 items-center justify-center rounded-xl bg-sky">
-                      <span className={`absolute left-2.5 top-2.5 rounded-full px-3 py-1 text-[11px] font-medium ${agotado ? "bg-ink text-primary-foreground" : p.u <= 2 ? "bg-brand text-primary-foreground" : "bg-card"}`}>
+                      <span className={`absolute left-2.5 top-2.5 z-10 rounded-full px-3 py-1 text-[11px] font-medium ${agotado ? "bg-ink text-primary-foreground" : p.u <= 2 ? "bg-brand text-primary-foreground" : "bg-card"}`}>
                         {agotado ? "Agotado" : p.u <= 2 ? `Quedan ${p.u}` : `${p.u} unidades`}
                       </span>
                       <img src={fotos[p.n]} alt={p.n} loading="lazy" className="h-full w-full rounded-xl object-cover" />
