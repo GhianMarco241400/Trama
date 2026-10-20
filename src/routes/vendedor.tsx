@@ -37,9 +37,23 @@ const productos: P[] = [
   { n: "Camisa Cuadros Franela", u: 0, p: 109.9, c: colores.slice(2, 5), i: Briefcase },
   { n: "Zapatilla Runner Lite", u: 40, p: 279.9, c: colores.slice(3, 6), i: Footprints },
   { n: "Casaca Cortaviento", u: 12, p: 199.9, c: colores.slice(0, 4), i: Shirt },
-  { n: "Polo Piqué Cuello", u: 28, p: 79.9, c: colores.slice(1, 5), i: Shirt },
+  { n: "Zapatilla Trail Pro", u: 28, p: 79.9, c: colores.slice(1, 5), i: Shirt },
 ];
 
+const fotos: Record<string, string> = {
+  "Polo Básico Algodón": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg/500px-Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg",
+  "Camisa Oxford Lino": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg/500px-Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg",
+  "Jean Recto Índigo": "https://upload.wikimedia.org/wikipedia/commons/5/54/High_waisted_jeans_1435042736.jpg",
+  "Casaca Denim Clásica": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Jean_jacket.jpg/500px-Jean_jacket.jpg",
+  "Zapatilla Urbana Trama": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/A_Vans_Sneaker_On_The_Side.jpg/500px-A_Vans_Sneaker_On_The_Side.jpg",
+  "Polo Oversize Rayas": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Banana_Republic_Button-Down_Shirt_4_2019-03-21.jpg/500px-Banana_Republic_Button-Down_Shirt_4_2019-03-21.jpg",
+  "Chino Slim Arena": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Chino_pants.jpg/500px-Chino_pants.jpg",
+  "Reloj Minimal Negro": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Fossil_wristwatch_with_white_background.jpg/500px-Fossil_wristwatch_with_white_background.jpg",
+  "Camisa Cuadros Franela": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1c/Flannel_Shirt_For_Abi.jpg/500px-Flannel_Shirt_For_Abi.jpg",
+  "Zapatilla Runner Lite": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Asics_Gel-Cumulus_22.jpg/500px-Asics_Gel-Cumulus_22.jpg",
+  "Casaca Cortaviento": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Denim_jacket_details.jpg/500px-Denim_jacket_details.jpg",
+  "Zapatilla Trail Pro": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Brooks_Ghost_14_GTX.jpg/500px-Brooks_Ghost_14_GTX.jpg",
+};
 const s = (n: number) => `S/ ${n.toFixed(2)}`;
 const iconBtn = "flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-ink hover:text-primary-foreground";
 
@@ -105,10 +119,10 @@ function Vendedor() {
                 return (
                   <div key={p.n} className={`rounded-2xl bg-card p-2.5 transition-shadow hover:shadow-lg ${agotado ? "opacity-50" : ""}`}>
                     <div className="relative flex h-40 items-center justify-center rounded-xl bg-sky">
-                      <span className={`absolute left-2.5 top-2.5 rounded-full px-3 py-1 text-[11px] font-medium ${agotado ? "bg-ink text-primary-foreground" : p.u <= 2 ? "bg-brand text-primary-foreground" : "bg-card"}`}>
+                      <span className={`absolute left-2.5 top-2.5 z-10 rounded-full px-3 py-1 text-[11px] font-medium ${agotado ? "bg-ink text-primary-foreground" : p.u <= 2 ? "bg-brand text-primary-foreground" : "bg-card"}`}>
                         {agotado ? "Agotado" : p.u <= 2 ? `Quedan ${p.u}` : `${p.u} unidades`}
                       </span>
-                      <p.i className="h-20 w-20 text-ink/70" strokeWidth={1.1} />
+                      <img src={fotos[p.n]} alt={p.n} loading="lazy" className="h-full w-full rounded-xl object-cover" />
                     </div>
                     <div className="px-1.5 pb-1 pt-3">
                       <h3 className="text-sm font-semibold">{p.n}</h3>
@@ -160,7 +174,7 @@ function Vendedor() {
             </div>
             {[{ n: "Zapatilla Urbana Trama", t: "42", c: "Arena", p: 249.9, q: 1, i: Footprints, h: "#c9b99a" }, { n: "Camisa Oxford Lino", t: "M", c: "Verde", p: 119.9, q: 2, i: Briefcase, h: "#2f5d50" }].map((it) => (
               <div key={it.n} className="mt-3 flex gap-3 rounded-2xl border border-border p-2.5">
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-sky"><it.i className="h-10 w-10 text-ink/70" strokeWidth={1.2} /></div>
+                <img src={fotos[it.n]} alt={it.n} className="h-20 w-20 shrink-0 rounded-xl bg-sky object-cover" />
                 <div className="flex-1">
                   <div className="flex justify-between"><p className="text-sm font-semibold">{it.n}</p><Trash2 className="h-4 w-4 text-muted-foreground" /></div>
                   <div className="mt-1 flex gap-1 text-[10px]">
