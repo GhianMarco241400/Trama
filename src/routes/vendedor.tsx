@@ -18,9 +18,13 @@ export const Route = createFileRoute("/vendedor")({
   component: Vendedor,
 });
 
-const categorias: { n: string; i: LucideIcon; k: number }[] = [
-  { n: "Polos", i: Shirt, k: 48 }, { n: "Camisas", i: Briefcase, k: 32 }, { n: "Pantalones", i: Layers, k: 27 },
-  { n: "Casacas", i: Shirt, k: 19 }, { n: "Zapatillas", i: Footprints, k: 54 }, { n: "Accesorios", i: Watch, k: 23 },
+const categorias: { n: string; i: LucideIcon; k: number; f: string }[] = [
+  { n: "Polos", i: Shirt, k: 48, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg/300px-Dutch_flag_white_t-shirt_at_the_HEMA%2C_Winschoten_%282019%29.jpg" },
+  { n: "Camisas", i: Briefcase, k: 32, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg/300px-Banana_Republic_Button-Down_Shirt_3_2019-03-21.jpg" },
+  { n: "Pantalones", i: Layers, k: 27, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Chino_pants.jpg/300px-Chino_pants.jpg" },
+  { n: "Casacas", i: Shirt, k: 19, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Jean_jacket.jpg/300px-Jean_jacket.jpg" },
+  { n: "Zapatillas", i: Footprints, k: 54, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/A_Vans_Sneaker_On_The_Side.jpg/300px-A_Vans_Sneaker_On_The_Side.jpg" },
+  { n: "Accesorios", i: Watch, k: 23, f: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Fossil_wristwatch_with_white_background.jpg/300px-Fossil_wristwatch_with_white_background.jpg" },
 ];
 
 const colores = ["#1d1d1d", "#2f5d50", "#c9b99a", "#8a3b2c", "#4b6b8a", "#bfc7c9"];
