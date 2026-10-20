@@ -10,43 +10,194 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as VendedorRouteImport } from './routes/vendedor'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthAdminIndexRouteImport } from './routes/_auth/admin/index'
+import { Route as AuthAlmaceneroIndexRouteImport } from './routes/_auth/almacenero/index'
+import { Route as AuthAlmaceneroAjustesRouteImport } from './routes/_auth/almacenero/ajustes'
+import { Route as AuthAlmaceneroInventarioRouteImport } from './routes/_auth/almacenero/inventario'
+import { Route as AuthAlmaceneroKardexRouteImport } from './routes/_auth/almacenero/kardex'
+import { Route as AuthAlmaceneroRecepcionesRouteImport } from './routes/_auth/almacenero/recepciones'
+import { Route as AuthAlmaceneroTransferenciasRouteImport } from './routes/_auth/almacenero/transferencias'
+import { Route as AuthContadorIndexRouteImport } from './routes/_auth/contador/index'
+import { Route as AuthVendedorIndexRouteImport } from './routes/_auth/vendedor/index'
+import { Route as AuthVendedorClientesRouteImport } from './routes/_auth/vendedor/clientes'
+import { Route as AuthVendedorCotizacionesRouteImport } from './routes/_auth/vendedor/cotizaciones'
+import { Route as AuthVendedorVentasDelDiaRouteImport } from './routes/_auth/vendedor/ventas-del-dia'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VendedorRoute = VendedorRouteImport.update({
-  id: '/vendedor',
-  path: '/vendedor',
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAlmaceneroIndexRoute = AuthAlmaceneroIndexRouteImport.update({
+  id: '/almacenero/',
+  path: '/almacenero/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAlmaceneroAjustesRoute = AuthAlmaceneroAjustesRouteImport.update({
+  id: '/almacenero/ajustes',
+  path: '/almacenero/ajustes',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAlmaceneroInventarioRoute =
+  AuthAlmaceneroInventarioRouteImport.update({
+    id: '/almacenero/inventario',
+    path: '/almacenero/inventario',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthAlmaceneroKardexRoute = AuthAlmaceneroKardexRouteImport.update({
+  id: '/almacenero/kardex',
+  path: '/almacenero/kardex',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAlmaceneroRecepcionesRoute =
+  AuthAlmaceneroRecepcionesRouteImport.update({
+    id: '/almacenero/recepciones',
+    path: '/almacenero/recepciones',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthAlmaceneroTransferenciasRoute =
+  AuthAlmaceneroTransferenciasRouteImport.update({
+    id: '/almacenero/transferencias',
+    path: '/almacenero/transferencias',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthContadorIndexRoute = AuthContadorIndexRouteImport.update({
+  id: '/contador/',
+  path: '/contador/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVendedorIndexRoute = AuthVendedorIndexRouteImport.update({
+  id: '/vendedor/',
+  path: '/vendedor/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVendedorClientesRoute = AuthVendedorClientesRouteImport.update({
+  id: '/vendedor/clientes',
+  path: '/vendedor/clientes',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVendedorCotizacionesRoute =
+  AuthVendedorCotizacionesRouteImport.update({
+    id: '/vendedor/cotizaciones',
+    path: '/vendedor/cotizaciones',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthVendedorVentasDelDiaRoute =
+  AuthVendedorVentasDelDiaRouteImport.update({
+    id: '/vendedor/ventas-del-dia',
+    path: '/vendedor/ventas-del-dia',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/vendedor': typeof VendedorRoute
+  '/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
+  '/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
+  '/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
+  '/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
+  '/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/vendedor/clientes': typeof AuthVendedorClientesRoute
+  '/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
+  '/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
+  '/admin/': typeof AuthAdminIndexRoute
+  '/almacenero/': typeof AuthAlmaceneroIndexRoute
+  '/contador/': typeof AuthContadorIndexRoute
+  '/vendedor/': typeof AuthVendedorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/vendedor': typeof VendedorRoute
+  '/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
+  '/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
+  '/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
+  '/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
+  '/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/vendedor/clientes': typeof AuthVendedorClientesRoute
+  '/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
+  '/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
+  '/admin': typeof AuthAdminIndexRoute
+  '/almacenero': typeof AuthAlmaceneroIndexRoute
+  '/contador': typeof AuthContadorIndexRoute
+  '/vendedor': typeof AuthVendedorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/vendedor': typeof VendedorRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
+  '/_auth/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
+  '/_auth/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
+  '/_auth/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
+  '/_auth/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/_auth/vendedor/clientes': typeof AuthVendedorClientesRoute
+  '/_auth/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
+  '/_auth/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
+  '/_auth/admin/': typeof AuthAdminIndexRoute
+  '/_auth/almacenero/': typeof AuthAlmaceneroIndexRoute
+  '/_auth/contador/': typeof AuthContadorIndexRoute
+  '/_auth/vendedor/': typeof AuthVendedorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/vendedor'
+  fullPaths:
+    | '/'
+    | '/almacenero/ajustes'
+    | '/almacenero/inventario'
+    | '/almacenero/kardex'
+    | '/almacenero/recepciones'
+    | '/almacenero/transferencias'
+    | '/vendedor/clientes'
+    | '/vendedor/cotizaciones'
+    | '/vendedor/ventas-del-dia'
+    | '/admin/'
+    | '/almacenero/'
+    | '/contador/'
+    | '/vendedor/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/vendedor'
-  id: '__root__' | '/' | '/vendedor'
+  to:
+    | '/'
+    | '/almacenero/ajustes'
+    | '/almacenero/inventario'
+    | '/almacenero/kardex'
+    | '/almacenero/recepciones'
+    | '/almacenero/transferencias'
+    | '/vendedor/clientes'
+    | '/vendedor/cotizaciones'
+    | '/vendedor/ventas-del-dia'
+    | '/admin'
+    | '/almacenero'
+    | '/contador'
+    | '/vendedor'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_auth/almacenero/ajustes'
+    | '/_auth/almacenero/inventario'
+    | '/_auth/almacenero/kardex'
+    | '/_auth/almacenero/recepciones'
+    | '/_auth/almacenero/transferencias'
+    | '/_auth/vendedor/clientes'
+    | '/_auth/vendedor/cotizaciones'
+    | '/_auth/vendedor/ventas-del-dia'
+    | '/_auth/admin/'
+    | '/_auth/almacenero/'
+    | '/_auth/contador/'
+    | '/_auth/vendedor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  VendedorRoute: typeof VendedorRoute
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -58,19 +209,135 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vendedor': {
-      id: '/vendedor'
-      path: '/vendedor'
-      fullPath: '/vendedor'
-      preLoaderRoute: typeof VendedorRouteImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_auth/admin/': {
+      id: '/_auth/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthAdminIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/': {
+      id: '/_auth/almacenero/'
+      path: '/almacenero'
+      fullPath: '/almacenero/'
+      preLoaderRoute: typeof AuthAlmaceneroIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/ajustes': {
+      id: '/_auth/almacenero/ajustes'
+      path: '/almacenero/ajustes'
+      fullPath: '/almacenero/ajustes'
+      preLoaderRoute: typeof AuthAlmaceneroAjustesRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/inventario': {
+      id: '/_auth/almacenero/inventario'
+      path: '/almacenero/inventario'
+      fullPath: '/almacenero/inventario'
+      preLoaderRoute: typeof AuthAlmaceneroInventarioRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/kardex': {
+      id: '/_auth/almacenero/kardex'
+      path: '/almacenero/kardex'
+      fullPath: '/almacenero/kardex'
+      preLoaderRoute: typeof AuthAlmaceneroKardexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/recepciones': {
+      id: '/_auth/almacenero/recepciones'
+      path: '/almacenero/recepciones'
+      fullPath: '/almacenero/recepciones'
+      preLoaderRoute: typeof AuthAlmaceneroRecepcionesRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/almacenero/transferencias': {
+      id: '/_auth/almacenero/transferencias'
+      path: '/almacenero/transferencias'
+      fullPath: '/almacenero/transferencias'
+      preLoaderRoute: typeof AuthAlmaceneroTransferenciasRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/contador/': {
+      id: '/_auth/contador/'
+      path: '/contador'
+      fullPath: '/contador/'
+      preLoaderRoute: typeof AuthContadorIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/vendedor/': {
+      id: '/_auth/vendedor/'
+      path: '/vendedor'
+      fullPath: '/vendedor/'
+      preLoaderRoute: typeof AuthVendedorIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/vendedor/clientes': {
+      id: '/_auth/vendedor/clientes'
+      path: '/vendedor/clientes'
+      fullPath: '/vendedor/clientes'
+      preLoaderRoute: typeof AuthVendedorClientesRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/vendedor/cotizaciones': {
+      id: '/_auth/vendedor/cotizaciones'
+      path: '/vendedor/cotizaciones'
+      fullPath: '/vendedor/cotizaciones'
+      preLoaderRoute: typeof AuthVendedorCotizacionesRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/vendedor/ventas-del-dia': {
+      id: '/_auth/vendedor/ventas-del-dia'
+      path: '/vendedor/ventas-del-dia'
+      fullPath: '/vendedor/ventas-del-dia'
+      preLoaderRoute: typeof AuthVendedorVentasDelDiaRouteImport
+      parentRoute: typeof AuthRoute
     }
   }
 }
 
+interface AuthRouteChildren {
+  AuthAlmaceneroAjustesRoute: typeof AuthAlmaceneroAjustesRoute
+  AuthAlmaceneroInventarioRoute: typeof AuthAlmaceneroInventarioRoute
+  AuthAlmaceneroKardexRoute: typeof AuthAlmaceneroKardexRoute
+  AuthAlmaceneroRecepcionesRoute: typeof AuthAlmaceneroRecepcionesRoute
+  AuthAlmaceneroTransferenciasRoute: typeof AuthAlmaceneroTransferenciasRoute
+  AuthVendedorClientesRoute: typeof AuthVendedorClientesRoute
+  AuthVendedorCotizacionesRoute: typeof AuthVendedorCotizacionesRoute
+  AuthVendedorVentasDelDiaRoute: typeof AuthVendedorVentasDelDiaRoute
+  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
+  AuthAlmaceneroIndexRoute: typeof AuthAlmaceneroIndexRoute
+  AuthContadorIndexRoute: typeof AuthContadorIndexRoute
+  AuthVendedorIndexRoute: typeof AuthVendedorIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAlmaceneroAjustesRoute: AuthAlmaceneroAjustesRoute,
+  AuthAlmaceneroInventarioRoute: AuthAlmaceneroInventarioRoute,
+  AuthAlmaceneroKardexRoute: AuthAlmaceneroKardexRoute,
+  AuthAlmaceneroRecepcionesRoute: AuthAlmaceneroRecepcionesRoute,
+  AuthAlmaceneroTransferenciasRoute: AuthAlmaceneroTransferenciasRoute,
+  AuthVendedorClientesRoute: AuthVendedorClientesRoute,
+  AuthVendedorCotizacionesRoute: AuthVendedorCotizacionesRoute,
+  AuthVendedorVentasDelDiaRoute: AuthVendedorVentasDelDiaRoute,
+  AuthAdminIndexRoute: AuthAdminIndexRoute,
+  AuthAlmaceneroIndexRoute: AuthAlmaceneroIndexRoute,
+  AuthContadorIndexRoute: AuthContadorIndexRoute,
+  AuthVendedorIndexRoute: AuthVendedorIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  VendedorRoute: VendedorRoute,
+  AuthRoute: AuthRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

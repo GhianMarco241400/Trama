@@ -1,5 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Logo } from "@/components/Logo";
+import { useAuth, getHomeByRole } from "@/context/auth-context";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -14,6 +16,25 @@ export const Route = createFileRoute("/")({
 });
 
 function Login() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const user = login(email, password);
+    if (!user) {
+      setError("Correo o contraseña incorrectos");
+      return;
+    }
+
+    navigate({ to: getHomeByRole(user.role) as any });
+  };
+
   return (
     <div className="grid min-h-screen bg-background font-sans lg:grid-cols-2">
       <div className="relative hidden overflow-hidden bg-ink lg:block">
@@ -37,19 +58,29 @@ function Login() {
         <div className="w-full max-w-sm animate-rise">
           <div className="mb-10"><Logo /></div>
           <h1 className="text-3xl font-bold text-foreground">Bienvenido de nuevo</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Ingresa tus datos para abrir la caja.</p>
-          <div className="mt-8 space-y-4">
+          <p className="mt-2 text-sm text-muted-foreground">Ingresa tus datos para acceder al sistema.</p>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <label className="block text-sm font-medium text-foreground">
               Correo electrónico
-              <input type="email" placeholder="vendedor@trama.pe" className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" />
+              <input type="email" placeholder="usuario@trama.pe" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" required />
             </label>
             <label className="block text-sm font-medium text-foreground">
               Contraseña
-              <input type="password" placeholder="••••••••" className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" />
+              <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" required />
             </label>
-            <Link to="/vendedor" className="mt-2 block rounded-full bg-ink py-3 text-center text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-brand">
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <button type="submit" className="mt-2 block w-full rounded-full bg-ink py-3 text-center text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-brand">
               Ingresar
-            </Link>
+            </button>
+          </form>
+          <div className="mt-6 rounded-2xl border border-border bg-card p-4 text-xs text-muted-foreground">
+            <p className="font-semibold text-foreground">Usuarios de prueba</p>
+            <ul className="mt-2 space-y-1">
+              <li>admin@trama.pe / admin123</li>
+              <li>vendedor@trama.pe / vendedor123</li>
+              <li>almacenero@trama.pe / almacen123</li>
+              <li>contador@trama.pe / conta123</li>
+            </ul>
           </div>
         </div>
       </div>
