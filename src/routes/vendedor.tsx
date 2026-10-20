@@ -81,8 +81,11 @@ function Vendedor() {
                 <div className={`absolute -right-6 -top-6 h-20 w-20 rounded-full transition-transform duration-300 group-hover:scale-125 ${on ? "bg-ink/15" : "bg-sky/10"}`} />
                 <div className={`absolute -bottom-3 right-6 h-8 w-8 rounded-full border-4 ${on ? "border-ink/20" : "border-sky/10"}`} />
                 <div className="relative flex items-center gap-3">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${on ? "bg-ink text-brand" : "bg-sky text-ink"}`}>
-                    <c.i className="h-6 w-6" strokeWidth={1.6} />
+                  <div className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-xl ${on ? "ring-2 ring-ink/30" : ""}`}>
+                    <img src={c.f} alt={c.n} loading="lazy" className="h-full w-full object-cover" />
+                    <span className={`absolute bottom-0.5 right-0.5 flex h-5 w-5 items-center justify-center rounded-md ${on ? "bg-ink text-brand" : "bg-ink/80 text-primary-foreground"}`}>
+                      <c.i className="h-3 w-3" strokeWidth={1.8} />
+                    </span>
                   </div>
                   <div>
                     <p className={`text-sm font-semibold ${on ? "text-ink" : "text-primary-foreground"}`}>{c.n}</p>
