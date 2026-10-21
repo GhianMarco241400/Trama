@@ -12,10 +12,14 @@ export function Logo({ dark = false }: { dark?: boolean }) {
         <rect x="23" y="25" width="5" height="5" className="fill-ink" />
       </svg>
       <div className="leading-none">
-        <span className={`block text-2xl font-extrabold tracking-tight ${dark ? "text-primary-foreground" : "text-foreground"}`}>
+        <span
+          className={`block text-2xl font-extrabold tracking-tight ${dark ? "text-primary-foreground" : "text-foreground"}`}
+        >
           trama<span className="text-brand">.</span>
         </span>
-        <span className={`mt-1 block text-[9px] font-semibold uppercase tracking-[0.3em] ${dark ? "text-sky/60" : "text-muted-foreground"}`}>
+        <span
+          className={`mt-1 block text-[9px] font-semibold uppercase tracking-[0.3em] ${dark ? "text-sky/60" : "text-muted-foreground"}`}
+        >
           ropa & calzado
         </span>
       </div>

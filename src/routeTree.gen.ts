@@ -12,6 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthAdminIndexRouteImport } from './routes/_auth/admin/index'
+import { Route as AuthAdminCategoriasRouteImport } from './routes/_auth/admin/categorias'
+import { Route as AuthAdminComprasRouteImport } from './routes/_auth/admin/compras'
+import { Route as AuthAdminConfiguracionRouteImport } from './routes/_auth/admin/configuracion'
+import { Route as AuthAdminProductosRouteImport } from './routes/_auth/admin/productos'
+import { Route as AuthAdminProveedoresRouteImport } from './routes/_auth/admin/proveedores'
+import { Route as AuthAdminReportesRouteImport } from './routes/_auth/admin/reportes'
+import { Route as AuthAdminUsuariosRouteImport } from './routes/_auth/admin/usuarios'
+import { Route as AuthAdminVentasRouteImport } from './routes/_auth/admin/ventas'
 import { Route as AuthAlmaceneroIndexRouteImport } from './routes/_auth/almacenero/index'
 import { Route as AuthAlmaceneroAjustesRouteImport } from './routes/_auth/almacenero/ajustes'
 import { Route as AuthAlmaceneroInventarioRouteImport } from './routes/_auth/almacenero/inventario'
@@ -19,6 +27,11 @@ import { Route as AuthAlmaceneroKardexRouteImport } from './routes/_auth/almacen
 import { Route as AuthAlmaceneroRecepcionesRouteImport } from './routes/_auth/almacenero/recepciones'
 import { Route as AuthAlmaceneroTransferenciasRouteImport } from './routes/_auth/almacenero/transferencias'
 import { Route as AuthContadorIndexRouteImport } from './routes/_auth/contador/index'
+import { Route as AuthContadorArqueoRouteImport } from './routes/_auth/contador/arqueo'
+import { Route as AuthContadorCajaBancosRouteImport } from './routes/_auth/contador/caja-bancos'
+import { Route as AuthContadorCuentasCobrarRouteImport } from './routes/_auth/contador/cuentas-cobrar'
+import { Route as AuthContadorCuentasPagarRouteImport } from './routes/_auth/contador/cuentas-pagar'
+import { Route as AuthContadorReportesRouteImport } from './routes/_auth/contador/reportes'
 import { Route as AuthVendedorIndexRouteImport } from './routes/_auth/vendedor/index'
 import { Route as AuthVendedorClientesRouteImport } from './routes/_auth/vendedor/clientes'
 import { Route as AuthVendedorCotizacionesRouteImport } from './routes/_auth/vendedor/cotizaciones'
@@ -36,6 +49,46 @@ const AuthRoute = AuthRouteImport.update({
 const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminCategoriasRoute = AuthAdminCategoriasRouteImport.update({
+  id: '/admin/categorias',
+  path: '/admin/categorias',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminComprasRoute = AuthAdminComprasRouteImport.update({
+  id: '/admin/compras',
+  path: '/admin/compras',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminConfiguracionRoute = AuthAdminConfiguracionRouteImport.update({
+  id: '/admin/configuracion',
+  path: '/admin/configuracion',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminProductosRoute = AuthAdminProductosRouteImport.update({
+  id: '/admin/productos',
+  path: '/admin/productos',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminProveedoresRoute = AuthAdminProveedoresRouteImport.update({
+  id: '/admin/proveedores',
+  path: '/admin/proveedores',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminReportesRoute = AuthAdminReportesRouteImport.update({
+  id: '/admin/reportes',
+  path: '/admin/reportes',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminUsuariosRoute = AuthAdminUsuariosRouteImport.update({
+  id: '/admin/usuarios',
+  path: '/admin/usuarios',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminVentasRoute = AuthAdminVentasRouteImport.update({
+  id: '/admin/ventas',
+  path: '/admin/ventas',
   getParentRoute: () => AuthRoute,
 } as any)
 const AuthAlmaceneroIndexRoute = AuthAlmaceneroIndexRouteImport.update({
@@ -76,6 +129,33 @@ const AuthContadorIndexRoute = AuthContadorIndexRouteImport.update({
   path: '/contador/',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthContadorArqueoRoute = AuthContadorArqueoRouteImport.update({
+  id: '/contador/arqueo',
+  path: '/contador/arqueo',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthContadorCajaBancosRoute = AuthContadorCajaBancosRouteImport.update({
+  id: '/contador/caja-bancos',
+  path: '/contador/caja-bancos',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthContadorCuentasCobrarRoute =
+  AuthContadorCuentasCobrarRouteImport.update({
+    id: '/contador/cuentas-cobrar',
+    path: '/contador/cuentas-cobrar',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthContadorCuentasPagarRoute =
+  AuthContadorCuentasPagarRouteImport.update({
+    id: '/contador/cuentas-pagar',
+    path: '/contador/cuentas-pagar',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthContadorReportesRoute = AuthContadorReportesRouteImport.update({
+  id: '/contador/reportes',
+  path: '/contador/reportes',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthVendedorIndexRoute = AuthVendedorIndexRouteImport.update({
   id: '/vendedor/',
   path: '/vendedor/',
@@ -101,11 +181,24 @@ const AuthVendedorVentasDelDiaRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin/categorias': typeof AuthAdminCategoriasRoute
+  '/admin/compras': typeof AuthAdminComprasRoute
+  '/admin/configuracion': typeof AuthAdminConfiguracionRoute
+  '/admin/productos': typeof AuthAdminProductosRoute
+  '/admin/proveedores': typeof AuthAdminProveedoresRoute
+  '/admin/reportes': typeof AuthAdminReportesRoute
+  '/admin/usuarios': typeof AuthAdminUsuariosRoute
+  '/admin/ventas': typeof AuthAdminVentasRoute
   '/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
   '/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
   '/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
   '/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
   '/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/contador/arqueo': typeof AuthContadorArqueoRoute
+  '/contador/caja-bancos': typeof AuthContadorCajaBancosRoute
+  '/contador/cuentas-cobrar': typeof AuthContadorCuentasCobrarRoute
+  '/contador/cuentas-pagar': typeof AuthContadorCuentasPagarRoute
+  '/contador/reportes': typeof AuthContadorReportesRoute
   '/vendedor/clientes': typeof AuthVendedorClientesRoute
   '/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
   '/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
@@ -116,11 +209,24 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/categorias': typeof AuthAdminCategoriasRoute
+  '/admin/compras': typeof AuthAdminComprasRoute
+  '/admin/configuracion': typeof AuthAdminConfiguracionRoute
+  '/admin/productos': typeof AuthAdminProductosRoute
+  '/admin/proveedores': typeof AuthAdminProveedoresRoute
+  '/admin/reportes': typeof AuthAdminReportesRoute
+  '/admin/usuarios': typeof AuthAdminUsuariosRoute
+  '/admin/ventas': typeof AuthAdminVentasRoute
   '/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
   '/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
   '/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
   '/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
   '/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/contador/arqueo': typeof AuthContadorArqueoRoute
+  '/contador/caja-bancos': typeof AuthContadorCajaBancosRoute
+  '/contador/cuentas-cobrar': typeof AuthContadorCuentasCobrarRoute
+  '/contador/cuentas-pagar': typeof AuthContadorCuentasPagarRoute
+  '/contador/reportes': typeof AuthContadorReportesRoute
   '/vendedor/clientes': typeof AuthVendedorClientesRoute
   '/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
   '/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
@@ -133,11 +239,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/_auth/admin/categorias': typeof AuthAdminCategoriasRoute
+  '/_auth/admin/compras': typeof AuthAdminComprasRoute
+  '/_auth/admin/configuracion': typeof AuthAdminConfiguracionRoute
+  '/_auth/admin/productos': typeof AuthAdminProductosRoute
+  '/_auth/admin/proveedores': typeof AuthAdminProveedoresRoute
+  '/_auth/admin/reportes': typeof AuthAdminReportesRoute
+  '/_auth/admin/usuarios': typeof AuthAdminUsuariosRoute
+  '/_auth/admin/ventas': typeof AuthAdminVentasRoute
   '/_auth/almacenero/ajustes': typeof AuthAlmaceneroAjustesRoute
   '/_auth/almacenero/inventario': typeof AuthAlmaceneroInventarioRoute
   '/_auth/almacenero/kardex': typeof AuthAlmaceneroKardexRoute
   '/_auth/almacenero/recepciones': typeof AuthAlmaceneroRecepcionesRoute
   '/_auth/almacenero/transferencias': typeof AuthAlmaceneroTransferenciasRoute
+  '/_auth/contador/arqueo': typeof AuthContadorArqueoRoute
+  '/_auth/contador/caja-bancos': typeof AuthContadorCajaBancosRoute
+  '/_auth/contador/cuentas-cobrar': typeof AuthContadorCuentasCobrarRoute
+  '/_auth/contador/cuentas-pagar': typeof AuthContadorCuentasPagarRoute
+  '/_auth/contador/reportes': typeof AuthContadorReportesRoute
   '/_auth/vendedor/clientes': typeof AuthVendedorClientesRoute
   '/_auth/vendedor/cotizaciones': typeof AuthVendedorCotizacionesRoute
   '/_auth/vendedor/ventas-del-dia': typeof AuthVendedorVentasDelDiaRoute
@@ -150,11 +269,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin/categorias'
+    | '/admin/compras'
+    | '/admin/configuracion'
+    | '/admin/productos'
+    | '/admin/proveedores'
+    | '/admin/reportes'
+    | '/admin/usuarios'
+    | '/admin/ventas'
     | '/almacenero/ajustes'
     | '/almacenero/inventario'
     | '/almacenero/kardex'
     | '/almacenero/recepciones'
     | '/almacenero/transferencias'
+    | '/contador/arqueo'
+    | '/contador/caja-bancos'
+    | '/contador/cuentas-cobrar'
+    | '/contador/cuentas-pagar'
+    | '/contador/reportes'
     | '/vendedor/clientes'
     | '/vendedor/cotizaciones'
     | '/vendedor/ventas-del-dia'
@@ -165,11 +297,24 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/categorias'
+    | '/admin/compras'
+    | '/admin/configuracion'
+    | '/admin/productos'
+    | '/admin/proveedores'
+    | '/admin/reportes'
+    | '/admin/usuarios'
+    | '/admin/ventas'
     | '/almacenero/ajustes'
     | '/almacenero/inventario'
     | '/almacenero/kardex'
     | '/almacenero/recepciones'
     | '/almacenero/transferencias'
+    | '/contador/arqueo'
+    | '/contador/caja-bancos'
+    | '/contador/cuentas-cobrar'
+    | '/contador/cuentas-pagar'
+    | '/contador/reportes'
     | '/vendedor/clientes'
     | '/vendedor/cotizaciones'
     | '/vendedor/ventas-del-dia'
@@ -181,11 +326,24 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/_auth/admin/categorias'
+    | '/_auth/admin/compras'
+    | '/_auth/admin/configuracion'
+    | '/_auth/admin/productos'
+    | '/_auth/admin/proveedores'
+    | '/_auth/admin/reportes'
+    | '/_auth/admin/usuarios'
+    | '/_auth/admin/ventas'
     | '/_auth/almacenero/ajustes'
     | '/_auth/almacenero/inventario'
     | '/_auth/almacenero/kardex'
     | '/_auth/almacenero/recepciones'
     | '/_auth/almacenero/transferencias'
+    | '/_auth/contador/arqueo'
+    | '/_auth/contador/caja-bancos'
+    | '/_auth/contador/cuentas-cobrar'
+    | '/_auth/contador/cuentas-pagar'
+    | '/_auth/contador/reportes'
     | '/_auth/vendedor/clientes'
     | '/_auth/vendedor/cotizaciones'
     | '/_auth/vendedor/ventas-del-dia'
@@ -221,6 +379,62 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthAdminIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/categorias': {
+      id: '/_auth/admin/categorias'
+      path: '/admin/categorias'
+      fullPath: '/admin/categorias'
+      preLoaderRoute: typeof AuthAdminCategoriasRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/compras': {
+      id: '/_auth/admin/compras'
+      path: '/admin/compras'
+      fullPath: '/admin/compras'
+      preLoaderRoute: typeof AuthAdminComprasRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/configuracion': {
+      id: '/_auth/admin/configuracion'
+      path: '/admin/configuracion'
+      fullPath: '/admin/configuracion'
+      preLoaderRoute: typeof AuthAdminConfiguracionRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/productos': {
+      id: '/_auth/admin/productos'
+      path: '/admin/productos'
+      fullPath: '/admin/productos'
+      preLoaderRoute: typeof AuthAdminProductosRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/proveedores': {
+      id: '/_auth/admin/proveedores'
+      path: '/admin/proveedores'
+      fullPath: '/admin/proveedores'
+      preLoaderRoute: typeof AuthAdminProveedoresRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/reportes': {
+      id: '/_auth/admin/reportes'
+      path: '/admin/reportes'
+      fullPath: '/admin/reportes'
+      preLoaderRoute: typeof AuthAdminReportesRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/usuarios': {
+      id: '/_auth/admin/usuarios'
+      path: '/admin/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AuthAdminUsuariosRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/ventas': {
+      id: '/_auth/admin/ventas'
+      path: '/admin/ventas'
+      fullPath: '/admin/ventas'
+      preLoaderRoute: typeof AuthAdminVentasRouteImport
       parentRoute: typeof AuthRoute
     }
     '/_auth/almacenero/': {
@@ -272,6 +486,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthContadorIndexRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/contador/arqueo': {
+      id: '/_auth/contador/arqueo'
+      path: '/contador/arqueo'
+      fullPath: '/contador/arqueo'
+      preLoaderRoute: typeof AuthContadorArqueoRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/contador/caja-bancos': {
+      id: '/_auth/contador/caja-bancos'
+      path: '/contador/caja-bancos'
+      fullPath: '/contador/caja-bancos'
+      preLoaderRoute: typeof AuthContadorCajaBancosRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/contador/cuentas-cobrar': {
+      id: '/_auth/contador/cuentas-cobrar'
+      path: '/contador/cuentas-cobrar'
+      fullPath: '/contador/cuentas-cobrar'
+      preLoaderRoute: typeof AuthContadorCuentasCobrarRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/contador/cuentas-pagar': {
+      id: '/_auth/contador/cuentas-pagar'
+      path: '/contador/cuentas-pagar'
+      fullPath: '/contador/cuentas-pagar'
+      preLoaderRoute: typeof AuthContadorCuentasPagarRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/contador/reportes': {
+      id: '/_auth/contador/reportes'
+      path: '/contador/reportes'
+      fullPath: '/contador/reportes'
+      preLoaderRoute: typeof AuthContadorReportesRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/vendedor/': {
       id: '/_auth/vendedor/'
       path: '/vendedor'
@@ -304,11 +553,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthRouteChildren {
+  AuthAdminCategoriasRoute: typeof AuthAdminCategoriasRoute
+  AuthAdminComprasRoute: typeof AuthAdminComprasRoute
+  AuthAdminConfiguracionRoute: typeof AuthAdminConfiguracionRoute
+  AuthAdminProductosRoute: typeof AuthAdminProductosRoute
+  AuthAdminProveedoresRoute: typeof AuthAdminProveedoresRoute
+  AuthAdminReportesRoute: typeof AuthAdminReportesRoute
+  AuthAdminUsuariosRoute: typeof AuthAdminUsuariosRoute
+  AuthAdminVentasRoute: typeof AuthAdminVentasRoute
   AuthAlmaceneroAjustesRoute: typeof AuthAlmaceneroAjustesRoute
   AuthAlmaceneroInventarioRoute: typeof AuthAlmaceneroInventarioRoute
   AuthAlmaceneroKardexRoute: typeof AuthAlmaceneroKardexRoute
   AuthAlmaceneroRecepcionesRoute: typeof AuthAlmaceneroRecepcionesRoute
   AuthAlmaceneroTransferenciasRoute: typeof AuthAlmaceneroTransferenciasRoute
+  AuthContadorArqueoRoute: typeof AuthContadorArqueoRoute
+  AuthContadorCajaBancosRoute: typeof AuthContadorCajaBancosRoute
+  AuthContadorCuentasCobrarRoute: typeof AuthContadorCuentasCobrarRoute
+  AuthContadorCuentasPagarRoute: typeof AuthContadorCuentasPagarRoute
+  AuthContadorReportesRoute: typeof AuthContadorReportesRoute
   AuthVendedorClientesRoute: typeof AuthVendedorClientesRoute
   AuthVendedorCotizacionesRoute: typeof AuthVendedorCotizacionesRoute
   AuthVendedorVentasDelDiaRoute: typeof AuthVendedorVentasDelDiaRoute
@@ -319,11 +581,24 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthAdminCategoriasRoute: AuthAdminCategoriasRoute,
+  AuthAdminComprasRoute: AuthAdminComprasRoute,
+  AuthAdminConfiguracionRoute: AuthAdminConfiguracionRoute,
+  AuthAdminProductosRoute: AuthAdminProductosRoute,
+  AuthAdminProveedoresRoute: AuthAdminProveedoresRoute,
+  AuthAdminReportesRoute: AuthAdminReportesRoute,
+  AuthAdminUsuariosRoute: AuthAdminUsuariosRoute,
+  AuthAdminVentasRoute: AuthAdminVentasRoute,
   AuthAlmaceneroAjustesRoute: AuthAlmaceneroAjustesRoute,
   AuthAlmaceneroInventarioRoute: AuthAlmaceneroInventarioRoute,
   AuthAlmaceneroKardexRoute: AuthAlmaceneroKardexRoute,
   AuthAlmaceneroRecepcionesRoute: AuthAlmaceneroRecepcionesRoute,
   AuthAlmaceneroTransferenciasRoute: AuthAlmaceneroTransferenciasRoute,
+  AuthContadorArqueoRoute: AuthContadorArqueoRoute,
+  AuthContadorCajaBancosRoute: AuthContadorCajaBancosRoute,
+  AuthContadorCuentasCobrarRoute: AuthContadorCuentasCobrarRoute,
+  AuthContadorCuentasPagarRoute: AuthContadorCuentasPagarRoute,
+  AuthContadorReportesRoute: AuthContadorReportesRoute,
   AuthVendedorClientesRoute: AuthVendedorClientesRoute,
   AuthVendedorCotizacionesRoute: AuthVendedorCotizacionesRoute,
   AuthVendedorVentasDelDiaRoute: AuthVendedorVentasDelDiaRoute,

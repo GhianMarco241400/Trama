@@ -1,24 +1,25 @@
-import { ChevronDown, LogOut } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
-import { useAuth } from '@/context/auth-context';
-import { ROLE_LABELS } from '@/lib/auth';
+import { ChevronDown, LogOut } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@/context/auth-context";
+import { ROLE_LABELS } from "@/lib/auth";
 
-const iconBtn = "flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-ink hover:text-primary-foreground";
+const iconBtn =
+  "flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-ink hover:text-primary-foreground";
 
 function getInitials(name?: string | null) {
-  if (!name) return 'TR';
-  const parts = name.trim().split(' ');
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
+  if (!name) return "TR";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return (parts[0]?.slice(0, 2) ?? "").toUpperCase();
+  return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase();
 }
 
 export function Topbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate({ to: '/' });
+  const handleLogout = async () => {
+    await logout();
+    navigate({ to: "/" });
   };
 
   return (
@@ -29,8 +30,10 @@ export function Topbar() {
             {getInitials(user?.name)}
           </div>
           <div className="leading-tight">
-            <p className="text-xs font-semibold">{user?.name ?? 'Invitado'}</p>
-            <p className="text-[10px] text-muted-foreground">{user?.role ? ROLE_LABELS[user.role] : '-'}</p>
+            <p className="text-xs font-semibold">{user?.name ?? "Invitado"}</p>
+            <p className="text-[10px] text-muted-foreground">
+              {user?.role ? ROLE_LABELS[user.role] : "-"}
+            </p>
           </div>
         </div>
         <button className={iconBtn} onClick={handleLogout} title="Cerrar sesión">

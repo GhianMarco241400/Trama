@@ -1,8 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useState, useMemo } from 'react';
-import { Search, Filter, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
+import { createFileRoute } from "@tanstack/react-router";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Search, ArrowUpCircle, ArrowDownCircle, Calendar } from "lucide-react";
+import { listStockMovements } from "@/lib/api/inventory";
 
-export const Route = createFileRoute('/_auth/almacenero/kardex')({
+export const Route = createFileRoute("/_auth/almacenero/kardex")({
   component: KardexInventario,
 });
 
@@ -11,41 +13,82 @@ type Movimiento = {
   fecha: string;
   hora: string;
   producto: string;
-  tipo: 'Entrada' | 'Salida';
+  tipo: "Entrada" | "Salida";
   documento: string;
   cantidad: number;
   saldo: number;
   usuario: string;
   motivo: string;
+  almacen: string;
 };
 
-const MOCK_MOVIMIENTOS: Movimiento[] = [
-  { id: 'K-001', fecha: '2026-10-20', hora: '09:15', producto: 'Polo Básico Algodón', tipo: 'Salida', documento: 'V-00123', cantidad: 2, saldo: 24, usuario: 'Lucía Quispe', motivo: 'Venta' },
-  { id: 'K-002', fecha: '2026-10-19', hora: '14:30', producto: 'Zapatilla Urbana Trama', tipo: 'Entrada', documento: 'OC-001', cantidad: 15, saldo: 31, usuario: 'Carlos Medina', motivo: 'Compra' },
-  { id: 'K-003', fecha: '2026-10-19', hora: '11:20', producto: 'Camisa Oxford Lino', tipo: 'Salida', documento: 'V-00124', cantidad: 2, saldo: 14, usuario: 'Lucía Quispe', motivo: 'Venta' },
-  { id: 'K-004', fecha: '2026-10-18', hora: '16:00', producto: 'Casaca Denim Clásica', tipo: 'Salida', documento: 'AJ-002', cantidad: 2, saldo: 2, usuario: 'Carlos Medina', motivo: 'Ajuste' },
-  { id: 'K-005', fecha: '2026-10-17', hora: '10:45', producto: 'Jean Recto Índigo', tipo: 'Entrada', documento: 'AJ-001', cantidad: 5, saldo: 0, usuario: 'Carlos Medina', motivo: 'Ajuste' },
-];
-
 function KardexInventario() {
-  const [movimientos] = useState<Movimiento[]>(MOCK_MOVIMIENTOS);
-  const [search, setSearch] = useState('');
-  const [filtroTipo, setFiltroTipo] = useState('Todos');
-  const [filtroMotivo, setFiltroMotivo] = useState('Todos');
+  const [search, setSearch] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState("Todos");
+  const [filtroMotivo, setFiltroMotivo] = useState("Todos");
+
+  const { data: movimientosRaw = [], isLoading } = useQuery({
+    queryKey: ["stock-movements"],
+    queryFn: listStockMovements,
+  });
+
+  const movimientos = useMemo<Movimiento[]>(() => {
+    return (movimientosRaw as any[]).map((m) => {
+      const movedAt = m.moved_at ? new Date(m.moved_at) : new Date();
+      const fechaStr = movedAt.toISOString().split("T")[0];
+      const fecha = fechaStr || "";
+      const hora = movedAt.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" });
+      const producto = m.variant?.product?.name || m.variant?.sku || "-";
+      const tipo =
+        m.type === "entrada" ? "Entrada" : m.type === "salida" ? "Salida" : (m.type as any);
+      const documento = m.document_ref || "-";
+      const cantidad = Number(m.quantity) || 0;
+      const saldo = Number(m.resulting_balance) || 0;
+      const usuario = m.user_id || "-";
+      const motivoMap: Record<string, string> = {
+        venta: "Venta",
+        compra: "Compra",
+        ajuste: "Ajuste",
+        transferencia: "Transferencia",
+      };
+      const motivo = motivoMap[m.reason] || m.reason || "-";
+      const almacen = m.warehouse?.name || "-";
+      return {
+        id: m.id,
+        fecha,
+        hora,
+        producto,
+        tipo,
+        documento,
+        cantidad,
+        saldo,
+        usuario,
+        motivo,
+        almacen,
+      };
+    });
+  }, [movimientosRaw]);
 
   const filtered = useMemo(() => {
     return movimientos.filter((m) => {
-      const matchSearch = m.producto.toLowerCase().includes(search.toLowerCase()) || m.documento.toLowerCase().includes(search.toLowerCase());
+      const matchSearch =
+        m.producto.toLowerCase().includes(search.toLowerCase()) ||
+        m.documento.toLowerCase().includes(search.toLowerCase());
       if (!matchSearch) return false;
-      if (filtroTipo !== 'Todos' && m.tipo !== filtroTipo) return false;
-      if (filtroMotivo !== 'Todos' && m.motivo !== filtroMotivo) return false;
+      if (filtroTipo !== "Todos" && m.tipo !== filtroTipo) return false;
+      if (filtroMotivo !== "Todos" && m.motivo !== filtroMotivo) return false;
       return true;
     });
   }, [movimientos, search, filtroTipo, filtroMotivo]);
 
-  const totalEntradas = movimientos.filter((m) => m.tipo === 'Entrada').reduce((acc, m) => acc + m.cantidad, 0);
-  const totalSalidas = movimientos.filter((m) => m.tipo === 'Salida').reduce((acc, m) => acc + m.cantidad, 0);
-  const movimientosHoy = movimientos.filter((m) => m.fecha === '2026-10-20').length;
+  const totalEntradas = movimientos
+    .filter((m) => m.tipo === "Entrada")
+    .reduce((acc, m) => acc + m.cantidad, 0);
+  const totalSalidas = movimientos
+    .filter((m) => m.tipo === "Salida")
+    .reduce((acc, m) => acc + m.cantidad, 0);
+  const hoy = new Date().toISOString().split("T")[0];
+  const movimientosHoy = movimientos.filter((m) => m.fecha === hoy).length;
 
   return (
     <div className="p-6">
@@ -94,7 +137,12 @@ function KardexInventario() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs text-muted-foreground">Balance</p>
-              <p className={`mt-1 text-xl font-bold ${totalEntradas - totalSalidas >= 0 ? 'text-green-600' : 'text-red-600'}`}>{totalEntradas - totalSalidas >= 0 ? '+' : ''}{totalEntradas - totalSalidas}</p>
+              <p
+                className={`mt-1 text-xl font-bold ${totalEntradas - totalSalidas >= 0 ? "text-green-600" : "text-red-600"}`}
+              >
+                {totalEntradas - totalSalidas >= 0 ? "+" : ""}
+                {totalEntradas - totalSalidas}
+              </p>
             </div>
           </div>
         </div>
@@ -104,18 +152,32 @@ function KardexInventario() {
         <div className="flex flex-wrap items-center gap-3 border-b border-border p-4">
           <div className="flex flex-1 items-center gap-2 rounded-full border border-border px-4 py-2">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar producto o documento..." className="w-full bg-transparent text-sm outline-none" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar producto o documento..."
+              className="w-full bg-transparent text-sm outline-none"
+            />
           </div>
-          <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)} className="rounded-full border border-border px-4 py-2 text-sm">
+          <select
+            value={filtroTipo}
+            onChange={(e) => setFiltroTipo(e.target.value)}
+            className="rounded-full border border-border px-4 py-2 text-sm"
+          >
             <option>Todos</option>
             <option>Entrada</option>
             <option>Salida</option>
           </select>
-          <select value={filtroMotivo} onChange={(e) => setFiltroMotivo(e.target.value)} className="rounded-full border border-border px-4 py-2 text-sm">
+          <select
+            value={filtroMotivo}
+            onChange={(e) => setFiltroMotivo(e.target.value)}
+            className="rounded-full border border-border px-4 py-2 text-sm"
+          >
             <option>Todos</option>
             <option>Venta</option>
             <option>Compra</option>
             <option>Ajuste</option>
+            <option>Transferencia</option>
           </select>
         </div>
 
@@ -123,45 +185,82 @@ function KardexInventario() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
-                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Fecha/Hora</th>
-                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Producto</th>
+                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">
+                  Fecha/Hora
+                </th>
+                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">
+                  Producto
+                </th>
                 <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Tipo</th>
-                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Documento</th>
-                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Motivo</th>
-                <th className="p-4 text-center text-xs font-semibold text-muted-foreground">Cantidad</th>
-                <th className="p-4 text-center text-xs font-semibold text-muted-foreground">Saldo</th>
-                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">Usuario</th>
+                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">
+                  Documento
+                </th>
+                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">
+                  Motivo
+                </th>
+                <th className="p-4 text-center text-xs font-semibold text-muted-foreground">
+                  Cantidad
+                </th>
+                <th className="p-4 text-center text-xs font-semibold text-muted-foreground">
+                  Saldo
+                </th>
+                <th className="p-4 text-left text-xs font-semibold text-muted-foreground">
+                  Almacén
+                </th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((mov) => (
-                <tr key={mov.id} className="border-b border-border hover:bg-sky/5">
-                  <td className="p-4 text-sm">
-                    <div>
-                      <p>{mov.fecha}</p>
-                      <p className="text-xs text-muted-foreground">{mov.hora}</p>
-                    </div>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-sm text-muted-foreground">
+                    Cargando...
                   </td>
-                  <td className="p-4 text-sm font-semibold">{mov.producto}</td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-1">
-                      {mov.tipo === 'Entrada' ? <ArrowUpCircle className="h-4 w-4 text-green-600" /> : <ArrowDownCircle className="h-4 w-4 text-red-600" />}
-                      <span className={`rounded-full px-2 py-1 text-xs ${mov.tipo === 'Entrada' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                        {mov.tipo}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="p-4 text-sm font-mono">{mov.documento}</td>
-                  <td className="p-4 text-sm text-muted-foreground">{mov.motivo}</td>
-                  <td className="p-4 text-center">
-                    <span className={`font-semibold ${mov.tipo === 'Entrada' ? 'text-green-600' : 'text-red-600'}`}>
-                      {mov.tipo === 'Entrada' ? '+' : '-'}{mov.cantidad}
-                    </span>
-                  </td>
-                  <td className="p-4 text-center text-sm font-semibold">{mov.saldo}</td>
-                  <td className="p-4 text-sm">{mov.usuario}</td>
                 </tr>
-              ))}
+              ) : filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-sm text-muted-foreground">
+                    Sin movimientos
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((mov) => (
+                  <tr key={mov.id} className="border-b border-border hover:bg-sky/5">
+                    <td className="p-4 text-sm">
+                      <div>
+                        <p>{mov.fecha}</p>
+                        <p className="text-xs text-muted-foreground">{mov.hora}</p>
+                      </div>
+                    </td>
+                    <td className="p-4 text-sm font-semibold">{mov.producto}</td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-1">
+                        {mov.tipo === "Entrada" ? (
+                          <ArrowUpCircle className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <ArrowDownCircle className="h-4 w-4 text-red-600" />
+                        )}
+                        <span
+                          className={`rounded-full px-2 py-1 text-xs ${mov.tipo === "Entrada" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+                        >
+                          {mov.tipo}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-4 text-sm font-mono">{mov.documento}</td>
+                    <td className="p-4 text-sm text-muted-foreground">{mov.motivo}</td>
+                    <td className="p-4 text-center">
+                      <span
+                        className={`font-semibold ${mov.tipo === "Entrada" ? "text-green-600" : "text-red-600"}`}
+                      >
+                        {mov.tipo === "Entrada" ? "+" : "-"}
+                        {mov.cantidad}
+                      </span>
+                    </td>
+                    <td className="p-4 text-center text-sm font-semibold">{mov.saldo}</td>
+                    <td className="p-4 text-sm">{mov.almacen}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

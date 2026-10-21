@@ -99,11 +99,11 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
-  --ink: #0F0F0F;
-  --brand: #FF4B1F;
-  --sky: #DCE8EA;
-  --background: #F1F1F1;
-  --primary: #0F0F0F;
+  --ink: #0f0f0f;
+  --brand: #ff4b1f;
+  --sky: #dce8ea;
+  --background: #f1f1f1;
+  --primary: #0f0f0f;
   --primary-foreground: #ffffff;
   --radius: 1rem;
 }
@@ -154,7 +154,28 @@
   }
 }
 
-@keyframes floaty { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-18px) rotate(4deg)} }
-@keyframes rise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-@utility animate-floaty { animation: floaty 7s ease-in-out infinite; }
-@utility animate-rise { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-18px) rotate(4deg);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility animate-floaty {
+  animation: floaty 7s ease-in-out infinite;
+}
+@utility animate-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}

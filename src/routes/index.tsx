@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { useAuth, getHomeByRole } from "@/context/auth-context";
+import { MOCK_CREDENTIALS } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,18 +22,21 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
-    const user = login(email, password);
+    const { user, error: loginError } = await login(email, password);
     if (!user) {
-      setError("Correo o contraseña incorrectos");
+      setError(loginError ?? "Correo o contraseña incorrectos");
+      setLoading(false);
       return;
     }
 
-    navigate({ to: getHomeByRole(user.role) as any });
+    navigate({ to: getHomeByRole(user.role) as never });
   };
 
   return (
@@ -56,30 +60,53 @@ function Login() {
 
       <div className="flex items-center justify-center p-6">
         <div className="w-full max-w-sm animate-rise">
-          <div className="mb-10"><Logo /></div>
+          <div className="mb-10">
+            <Logo />
+          </div>
           <h1 className="text-3xl font-bold text-foreground">Bienvenido de nuevo</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Ingresa tus datos para acceder al sistema.</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Ingresa tus datos para acceder al sistema.
+          </p>
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <label className="block text-sm font-medium text-foreground">
               Correo electrónico
-              <input type="email" placeholder="usuario@trama.pe" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" required />
+              <input
+                type="email"
+                placeholder="usuario@trama.pe"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink"
+                required
+              />
             </label>
             <label className="block text-sm font-medium text-foreground">
               Contraseña
-              <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink" required />
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1.5 w-full rounded-full border border-border bg-card px-5 py-3 text-sm outline-none focus:border-ink"
+                required
+              />
             </label>
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <button type="submit" className="mt-2 block w-full rounded-full bg-ink py-3 text-center text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-brand">
-              Ingresar
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 block w-full rounded-full bg-ink py-3 text-center text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-brand disabled:opacity-60"
+            >
+              {loading ? "Ingresando…" : "Ingresar"}
             </button>
           </form>
           <div className="mt-6 rounded-2xl border border-border bg-card p-4 text-xs text-muted-foreground">
             <p className="font-semibold text-foreground">Usuarios de prueba</p>
             <ul className="mt-2 space-y-1">
-              <li>admin@trama.pe / admin123</li>
-              <li>vendedor@trama.pe / vendedor123</li>
-              <li>almacenero@trama.pe / almacen123</li>
-              <li>contador@trama.pe / conta123</li>
+              {MOCK_CREDENTIALS.map((c) => (
+                <li key={c.email}>
+                  {c.email} / {c.password}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
